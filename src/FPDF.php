@@ -1833,7 +1833,8 @@ class FPDF
         }
         if (isset($info['trns']) && is_array($info['trns'])) {
             $trns = '';
-            for ($i = 0; $i < count($info['trns']); $i++) {
+            $count = count($info['trns']);
+            for ($i = 0; $i < $count; $i++) {
                 $trns .= $info['trns'][$i].' '.$info['trns'][$i].' ';
             }
             $this->put('/Mask ['.$trns.']');
