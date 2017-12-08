@@ -9,6 +9,8 @@
 
 namespace DavidGarciaCat\FPDF;
 
+use DavidGarciaCat\FPDF\Exception\FPDFException;
+
 /**
  * @author FPDF Team
  */
@@ -277,7 +279,7 @@ class FPDF
     public function Error($msg)
     {
         // Fatal error
-        throw new Exception('FPDF error: '.$msg);
+        throw new FPDFException('FPDF error: '.$msg);
     }
 
     public function Close()
