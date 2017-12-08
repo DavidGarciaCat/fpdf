@@ -1,0 +1,26 @@
+{
+    "name": "david-garcia/fpdf",
+    "description": "FPDF library which allows to generate PDF files with pure PHP",
+    "type": "library",
+    "keywords": ["pdf", "fpdf"],
+    "homepage": "https://github.com/DavidGarciaCat/fpdf",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "FPDF team",
+            "homepage": "http://www.fpdf.org/"
+        },
+        {
+            "name": "David Garcia",
+            "email": "me@davidgarcia.cat"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DavidGarciaCat\\FPDF\\": "src"
+        }
+    },
+    "require": {
+        "php" : ">=5.5,<7.2"
+    }
+}
