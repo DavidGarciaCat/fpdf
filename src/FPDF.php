@@ -9,6 +9,9 @@
 
 namespace DavidGarciaCat\FPDF;
 
+/**
+ * @author FPDF Team
+ */
 class FPDF
 {
     protected $page;               // current page number
