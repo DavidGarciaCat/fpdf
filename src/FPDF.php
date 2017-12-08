@@ -1888,7 +1888,7 @@ class FPDF
     protected function putInfo()
     {
         $this->metadata['Producer'] = 'david-garcia/fpdf';
-        $this->metadata['CreationDate'] = 'D:'.@date('YmdHis');
+        $this->metadata['CreationDate'] = 'D:'.date('YmdHis');
         foreach ($this->metadata as $key=>$value) {
             $this->put('/'.$key.' '.$this->textString($value));
         }
