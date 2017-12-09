@@ -13,7 +13,7 @@ Just include your package in your `composer.json` file:
 ```json
 {
     "require": {
-        "david-garcia/fpdf": "^1.0"
+        "david-garcia/fpdf": "^1.1"
     }
 }
 ```
