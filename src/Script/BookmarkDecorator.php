@@ -12,7 +12,7 @@ namespace DavidGarciaCat\FPDF\Script;
 /**
  * This extension adds bookmark support.
  */
-class BookmarkDecorator extends FPADFacade
+class BookmarkDecorator extends FPDFFacade
 {
     protected $outlines = [];
 
@@ -21,9 +21,9 @@ class BookmarkDecorator extends FPADFacade
     /**
      * BookmarkDecorator constructor.
      *
-     * @param FPADFacade $fpdf
+     * @param FPDFFacade $fpdf
      */
-    public function __construct(FPADFacade $fpdf)
+    public function __construct(FPDFFacade $fpdf)
     {
         parent::__construct($fpdf->baseFpdf);
     }

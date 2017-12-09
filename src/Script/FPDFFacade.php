@@ -12,7 +12,7 @@ namespace DavidGarciaCat\FPDF\Script;
 use DavidGarciaCat\FPDF\FPDF;
 use DavidGarciaCat\FPDF\FPDFInterface;
 
-class FPADFacade implements FPDFInterface
+class FPDFFacade implements FPDFInterface
 {
     /**
      * @var FPDF
@@ -20,7 +20,7 @@ class FPADFacade implements FPDFInterface
     protected $baseFpdf;
 
     /**
-     * FPADFacade constructor.
+     * FPDFFacade constructor.
      *
      * @param FPDF $baseFpdf
      */
