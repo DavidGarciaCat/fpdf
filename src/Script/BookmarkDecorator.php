@@ -9,19 +9,21 @@
 
 namespace DavidGarciaCat\FPDF\Script;
 
-use DavidGarciaCat\FPDF\FPDF;
-
-class BookmarkDecorator extends FPDF
+class BookmarkDecorator extends FPADFacade
 {
-    private $fpdf;
-
-    public function __construct(FPDF $fpdf)
-    {
-        $this->fpdf = $fpdf;
-    }
-
     protected $outlines = [];
+
     protected $outlineRoot;
+
+    /**
+     * BookmarkDecorator constructor.
+     *
+     * @param FPADFacade $fpdf
+     */
+    public function __construct(FPADFacade $fpdf)
+    {
+        parent::__construct($fpdf->baseFpdf);
+    }
 
     /**
      * @param string $txt    The bookmark title.
@@ -36,10 +38,10 @@ class BookmarkDecorator extends FPDF
         }
 
         if ($y == -1) {
-            $y = $this->fpdf->getY();
+            $y = $this->baseFpdf->getY();
         }
 
-        $this->outlines[] = ['t'=>$txt, 'l'=>$level, 'y'=>($this->fpdf->h - $y) * $this->fpdf->k, 'p'=>$this->fpdf->pageNo()];
+        $this->outlines[] = ['t'=>$txt, 'l'=>$level, 'y'=>($this->baseFpdf->h - $y) * $this->baseFpdf->k, 'p'=>$this->baseFpdf->pageNo()];
     }
 
     public function putBookmarks()
@@ -81,56 +83,56 @@ class BookmarkDecorator extends FPDF
         }
 
         // Outline items
-        $n = $this->fpdf->n + 1;
+        $n = $this->baseFpdf->n + 1;
 
         foreach ($this->outlines as $i=>$o) {
-            $this->fpdf->newObject();
-            $this->fpdf->put('<</Title '.$this->fpdf->textString($o['t']));
-            $this->fpdf->put('/Parent '.($n + $o['parent']).' 0 R');
+            $this->baseFpdf->newObject();
+            $this->baseFpdf->put('<</Title '.$this->baseFpdf->textString($o['t']));
+            $this->baseFpdf->put('/Parent '.($n + $o['parent']).' 0 R');
 
             if (isset($o['prev'])) {
-                $this->fpdf->put('/Prev '.($n + $o['prev']).' 0 R');
+                $this->baseFpdf->put('/Prev '.($n + $o['prev']).' 0 R');
             }
 
             if (isset($o['next'])) {
-                $this->fpdf->put('/Next '.($n + $o['next']).' 0 R');
+                $this->baseFpdf->put('/Next '.($n + $o['next']).' 0 R');
             }
 
             if (isset($o['first'])) {
-                $this->fpdf->put('/First '.($n + $o['first']).' 0 R');
+                $this->baseFpdf->put('/First '.($n + $o['first']).' 0 R');
             }
 
             if (isset($o['last'])) {
-                $this->fpdf->put('/Last '.($n + $o['last']).' 0 R');
+                $this->baseFpdf->put('/Last '.($n + $o['last']).' 0 R');
             }
 
-            $this->fpdf->put(sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]', $this->fpdf->PageInfo[$o['p']]['n'], $o['y']));
-            $this->fpdf->put('/Count 0>>');
-            $this->fpdf->put('endobj');
+            $this->baseFpdf->put(sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]', $this->baseFpdf->PageInfo[$o['p']]['n'], $o['y']));
+            $this->baseFpdf->put('/Count 0>>');
+            $this->baseFpdf->put('endobj');
         }
 
         // Outline root
-        $this->fpdf->newObject();
-        $this->outlineRoot = $this->fpdf->n;
-        $this->fpdf->put('<</Type /Outlines /First '.$n.' 0 R');
-        $this->fpdf->put('/Last '.($n + $lru[0]).' 0 R>>');
-        $this->fpdf->put('endobj');
+        $this->baseFpdf->newObject();
+        $this->outlineRoot = $this->baseFpdf->n;
+        $this->baseFpdf->put('<</Type /Outlines /First '.$n.' 0 R');
+        $this->baseFpdf->put('/Last '.($n + $lru[0]).' 0 R>>');
+        $this->baseFpdf->put('endobj');
     }
 
     public function putResources()
     {
-        parent::putResources();
+        $this->baseFpdf->putResources();
 
-        $this->fpdf->putbookmarks();
+        $this->putbookmarks();
     }
 
     public function putCatalog()
     {
-        parent::putCatalog();
+        $this->baseFpdf->putCatalog();
 
         if (count($this->outlines) > 0) {
-            $this->fpdf->put('/Outlines '.$this->outlineRoot.' 0 R');
-            $this->fpdf->put('/PageMode /UseOutlines');
+            $this->baseFpdf->put('/Outlines '.$this->outlineRoot.' 0 R');
+            $this->baseFpdf->put('/PageMode /UseOutlines');
         }
     }
 }
