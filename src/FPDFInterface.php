@@ -191,9 +191,9 @@ interface FPDFInterface
      * Remark: if an image is used several times, only one copy is embedded in the file.
      *
      * @param string $file Path or URL of the image.
-     * @param null   $x    Abscissa of the upper-left corner. If not specified or equal to null,
+     * @param int    $x    Abscissa of the upper-left corner. If not specified or equal to null,
      *                     the current abscissa is used.
-     * @param null   $y    Ordinate of the upper-left corner. If not specified or equal to null, the current ordinate is
+     * @param int    $y    Ordinate of the upper-left corner. If not specified or equal to null, the current ordinate is
      *                     used; moreover, a page break is triggered first if necessary (in case automatic page breaking
      *                     is enabled) and, after the call, the current ordinate is moved to the bottom of the image.
      * @param int    $w    Width of the image in the page. There are three cases:
