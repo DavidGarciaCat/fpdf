@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## v1.1.0
+
+### Added
+
+- Build a FPDF Interface with the public methods
+- Build a FPDF Facade, used to call any public method and to extend it with Decorators
+- Build a FPDF Bookmarks Decorator to enhance the user experience
+
+### Changed
+
+- Updated README file to include an example about how to use Decorators to enhance the FPDF base functionalities
+
 ## v1.0.0 [2017-12-08]
 
 ### Added

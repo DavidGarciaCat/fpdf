@@ -38,17 +38,30 @@ Step 1. Include the composer autoload:
 require "vendor/autoload.php";
 ```
 
-Step 2. Include the `use` statement for `FPDF`:
+Step 2. Include the `use` statements for `FPDF`:
 
 ```php
 use DavidGarciaCat\FPDF\FPDF;
+use DavidGarciaCat\FPDF\Script\FPDFFacade;
 ```
 
 Step 3. Create a PDF file:
 
 ```php
-$pdf = new FPDF();
-$pdf->output();
+$fpdf = new FPDFFacade(new FPDF());
+$fpdf->output();
+```
+
+### Scripts
+
+FPDF allows to build and implement stripts to expand and enhance the experience working with the library.
+
+This project is implementing the currently published Scripts in FPDF website as Design Pattern Decorators.
+Just set-up the main library as a Facade and then inject it in any Decorator constructor: 
+
+```php
+$fpdf = new FPDFFacade(new FPDF());
+$fpdf = BookmarkDecorator($fpdf);
 ```
 
 Please check [FPDF website](http://www.fpdf.org) for tutorials and examples.
