@@ -65,7 +65,7 @@ use DavidGarciaCat\FPDF\Script\BookmarkDecorator;
 use DavidGarciaCat\FPDF\Script\FPDFFacade;
 
 $fpdf = new FPDFFacade(new FPDF());
-$fpdf = BookmarkDecorator($fpdf);
+$fpdf = new BookmarkDecorator($fpdf);
 ```
 
 ## What is FPDF?
