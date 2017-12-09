@@ -9,6 +9,9 @@
 
 namespace DavidGarciaCat\FPDF\Script;
 
+/**
+ * This extension adds bookmark support.
+ */
 class BookmarkDecorator extends FPADFacade
 {
     protected $outlines = [];
