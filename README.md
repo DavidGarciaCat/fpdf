@@ -89,3 +89,12 @@ FPDF requires no extension (except Zlib to enable compression and GD for GIF sup
 Please browse [www.fpdf.org](http://www.fpdf.org/) for Tutorials and Documentation. The tutorials will give you a quick start. The complete online documentation is available OnLine and you can downlaod it in multiple languages. It is strongly advised to read the FAQ which lists the most common questions and issues.
 
 A Script section is available and provides some useful extensions (such as bookmarks, rotations, tables, barcodes...).
+
+## ToDo
+
+- **Provide all FPDF Scripts natively**  
+FPDF has several scripts, but we need to download and include all of them manually, in order to use them. This project already moved the FPDF code to `namespaces` and is starting to include other FPDF Scripts, however the real goal is to include all these functionalities natively, as part of the project.
+- **Scrutinizer CI Code coverage**  
+Base FPDF source code, downloadable at [www.fpdf.org](http://www.fpdf.org/)'s website, does not include automated tests, so there's no code coverage. This project wants to provide tests, in order to enhance the code quality and offer the expected warranties that all of us want for a project like this.
+- **Scrutinizer CI Code score**  
+Base FPDF and FPDF Scripts are probably not designed in the right way, and code score is really poor due a high complexity and some missed checks. This project wants to improvide the code quality.
