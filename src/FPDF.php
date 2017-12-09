@@ -14,7 +14,7 @@ use DavidGarciaCat\FPDF\Exception\FPDFException;
 /**
  * @author FPDF Team
  */
-class FPDF
+class FPDF implements FPDFInterface
 {
     protected $page; // current page number
     protected $n; // current object number
