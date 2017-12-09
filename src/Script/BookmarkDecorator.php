@@ -34,7 +34,7 @@ class BookmarkDecorator extends FPDFFacade
      * @param int    $level  The bookmark level (0 is top level, 1 is just below, and so on). Default value: 0.
      * @param int    $y      The y position of the bookmark destination in the current page. -1 means the current position. Default value: 0.
      */
-    public function Bookmark($txt, $isUTF8 = false, $level = 0, $y = 0)
+    public function bookmark($txt, $isUTF8 = false, $level = 0, $y = 0)
     {
         if (!$isUTF8) {
             $txt = utf8_encode($txt);
