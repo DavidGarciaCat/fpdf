@@ -60,6 +60,10 @@ This project is implementing the currently published Scripts in FPDF website as 
 Just set-up the main library as a Facade and then inject it in any Decorator constructor: 
 
 ```php
+use DavidGarciaCat\FPDF\FPDF;
+use DavidGarciaCat\FPDF\Script\BookmarkDecorator;
+use DavidGarciaCat\FPDF\Script\FPDFFacade;
+
 $fpdf = new FPDFFacade(new FPDF());
 $fpdf = BookmarkDecorator($fpdf);
 ```
