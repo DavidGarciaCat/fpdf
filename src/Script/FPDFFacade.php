@@ -121,7 +121,7 @@ class FPDFFacade implements FPDFInterface
 
     public function ln($h = null)
     {
-        $this->baseFpdf->ln($h = null);
+        $this->baseFpdf->ln($h);
     }
 
     public function multiCell($w, $h, $txt, $border = 0, $align = 'J', $fill = false)
