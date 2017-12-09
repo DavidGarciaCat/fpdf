@@ -86,7 +86,7 @@ class FPADFacade implements FPDFInterface
 
     public function getStringWidth($s)
     {
-        return $this->baseFpdf->getStringWidth();
+        return $this->baseFpdf->getStringWidth($s);
     }
 
     public function getX()
