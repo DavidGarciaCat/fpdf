@@ -66,7 +66,7 @@ interface FPDFInterface
      *                            A3; A4; A5; Letter; Legal
      *                            or an array containing the width and the height (expressed in user unit).
      *                            The default value is the one passed to the constructor.
-     * @param int $rotation       Angle by which to rotate the page. It must be a multiple of 90;
+     * @param int    $rotation    Angle by which to rotate the page. It must be a multiple of 90;
      *                            positive values mean clockwise rotation. The default value is 0.
      */
     public function addPage($orientation = '', $size = '', $rotation = 0);
@@ -166,7 +166,7 @@ interface FPDFInterface
      * Puts an image. The size it will take on the page can be specified in different ways:
      * - explicit width and height (expressed in user unit or dpi)
      * - one explicit dimension, the other being calculated automatically in order to keep the original proportions
-     * - no explicit dimension, in which case the image is put at 96 dpi
+     * - no explicit dimension, in which case the image is put at 96 dpi.
      *
      * Supported formats are JPEG, PNG and GIF. The GD extension is required for GIF.
      *
