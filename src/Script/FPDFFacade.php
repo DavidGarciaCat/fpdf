@@ -136,7 +136,7 @@ class FPDFFacade implements FPDFInterface
 
     public function pageNo()
     {
-        $this->baseFpdf->pageNo();
+        return $this->baseFpdf->pageNo();
     }
 
     public function rect($x, $y, $w, $h, $style = '')
