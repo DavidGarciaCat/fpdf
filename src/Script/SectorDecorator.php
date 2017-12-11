@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * FPDF
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
 namespace DavidGarciaCat\FPDF\Script;
 
 use DavidGarciaCat\FPDF\FPDFInterface;
@@ -23,117 +30,125 @@ class SectorDecorator implements FPDFInterface
 
     // ----
 
-    public function sector($xc, $yc, $r, $a, $b, $style='FD', $cw=true, $o=90)
+    public function sector($xc, $yc, $r, $a, $b, $style = 'FD', $cw = true, $o = 90)
     {
         $d0 = $a - $b;
-        if($cw){
+        if ($cw) {
             $d = $b;
             $b = $o - $a;
             $a = $o - $d;
-        }else{
+        } else {
             $b += $o;
             $a += $o;
         }
-        while($a<0)
+        while ($a < 0) {
             $a += 360;
-        while($a>360)
+        }
+        while ($a > 360) {
             $a -= 360;
-        while($b<0)
+        }
+        while ($b < 0) {
             $b += 360;
-        while($b>360)
+        }
+        while ($b > 360) {
             $b -= 360;
-        if ($a > $b)
+        }
+        if ($a > $b) {
             $b += 360;
-        $b = $b/360*2*M_PI;
-        $a = $a/360*2*M_PI;
+        }
+        $b = $b / 360 * 2 * M_PI;
+        $a = $a / 360 * 2 * M_PI;
         $d = $b - $a;
-        if ($d == 0 && $d0 != 0)
-            $d = 2*M_PI;
+        if ($d == 0 && $d0 != 0) {
+            $d = 2 * M_PI;
+        }
         $k = $this->baseFpdf->k;
         $hp = $this->baseFpdf->h;
-        if (sin($d/2))
-            $MyArc = 4/3*(1-cos($d/2))/sin($d/2)*$r;
-        else
+        if (sin($d / 2)) {
+            $MyArc = 4 / 3 * (1 - cos($d / 2)) / sin($d / 2) * $r;
+        } else {
             $MyArc = 0;
+        }
         //first put the center
-        $this->baseFpdf->out(sprintf('%.2F %.2F m',($xc)*$k,($hp-$yc)*$k));
+        $this->baseFpdf->out(sprintf('%.2F %.2F m', ($xc) * $k, ($hp - $yc) * $k));
         //put the first point
-        $this->baseFpdf->out(sprintf('%.2F %.2F l',($xc+$r*cos($a))*$k,(($hp-($yc-$r*sin($a)))*$k)));
+        $this->baseFpdf->out(sprintf('%.2F %.2F l', ($xc + $r * cos($a)) * $k, (($hp - ($yc - $r * sin($a))) * $k)));
         //draw the arc
-        if ($d < M_PI/2){
+        if ($d < M_PI / 2) {
             $this->arc(
-                $xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a),
-                $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a),
-                $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2),
-                $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2),
-                $xc+$r*cos($b),
-                $yc-$r*sin($b)
+                $xc + $r * cos($a) + $MyArc * cos(M_PI / 2 + $a),
+                $yc - $r * sin($a) - $MyArc * sin(M_PI / 2 + $a),
+                $xc + $r * cos($b) + $MyArc * cos($b - M_PI / 2),
+                $yc - $r * sin($b) - $MyArc * sin($b - M_PI / 2),
+                $xc + $r * cos($b),
+                $yc - $r * sin($b)
             );
-        }else{
-            $b = $a + $d/4;
-            $MyArc = 4/3*(1-cos($d/8))/sin($d/8)*$r;
+        } else {
+            $b = $a + $d / 4;
+            $MyArc = 4 / 3 * (1 - cos($d / 8)) / sin($d / 8) * $r;
             $this->arc(
-                $xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a),
-                $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a),
-                $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2),
-                $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2),
-                $xc+$r*cos($b),
-                $yc-$r*sin($b)
-            );
-            $a = $b;
-            $b = $a + $d/4;
-            $this->arc(
-                $xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a),
-                $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a),
-                $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2),
-                $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2),
-                $xc+$r*cos($b),
-                $yc-$r*sin($b)
+                $xc + $r * cos($a) + $MyArc * cos(M_PI / 2 + $a),
+                $yc - $r * sin($a) - $MyArc * sin(M_PI / 2 + $a),
+                $xc + $r * cos($b) + $MyArc * cos($b - M_PI / 2),
+                $yc - $r * sin($b) - $MyArc * sin($b - M_PI / 2),
+                $xc + $r * cos($b),
+                $yc - $r * sin($b)
             );
             $a = $b;
-            $b = $a + $d/4;
+            $b = $a + $d / 4;
             $this->arc(
-                $xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a),
-                $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a),
-                $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2),
-                $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2),
-                $xc+$r*cos($b),
-                $yc-$r*sin($b)
+                $xc + $r * cos($a) + $MyArc * cos(M_PI / 2 + $a),
+                $yc - $r * sin($a) - $MyArc * sin(M_PI / 2 + $a),
+                $xc + $r * cos($b) + $MyArc * cos($b - M_PI / 2),
+                $yc - $r * sin($b) - $MyArc * sin($b - M_PI / 2),
+                $xc + $r * cos($b),
+                $yc - $r * sin($b)
             );
             $a = $b;
-            $b = $a + $d/4;
+            $b = $a + $d / 4;
             $this->arc(
-                $xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a),
-                $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a),
-                $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2),
-                $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2),
-                $xc+$r*cos($b),
-                $yc-$r*sin($b)
+                $xc + $r * cos($a) + $MyArc * cos(M_PI / 2 + $a),
+                $yc - $r * sin($a) - $MyArc * sin(M_PI / 2 + $a),
+                $xc + $r * cos($b) + $MyArc * cos($b - M_PI / 2),
+                $yc - $r * sin($b) - $MyArc * sin($b - M_PI / 2),
+                $xc + $r * cos($b),
+                $yc - $r * sin($b)
+            );
+            $a = $b;
+            $b = $a + $d / 4;
+            $this->arc(
+                $xc + $r * cos($a) + $MyArc * cos(M_PI / 2 + $a),
+                $yc - $r * sin($a) - $MyArc * sin(M_PI / 2 + $a),
+                $xc + $r * cos($b) + $MyArc * cos($b - M_PI / 2),
+                $yc - $r * sin($b) - $MyArc * sin($b - M_PI / 2),
+                $xc + $r * cos($b),
+                $yc - $r * sin($b)
             );
         }
         //terminate drawing
-        if($style=='F')
-            $op='f';
-        elseif($style=='FD' || $style=='DF')
-            $op='b';
-        else
-            $op='s';
+        if ($style == 'F') {
+            $op = 'f';
+        } elseif ($style == 'FD' || $style == 'DF') {
+            $op = 'b';
+        } else {
+            $op = 's';
+        }
         $this->baseFpdf->out($op);
     }
 
-    public function arc($x1, $y1, $x2, $y2, $x3, $y3 )
+    public function arc($x1, $y1, $x2, $y2, $x3, $y3)
     {
         $h = $this->baseFpdf->h;
 
         $this->baseFpdf->out(
             sprintf(
                 '%.2F %.2F %.2F %.2F %.2F %.2F c',
-                $x1*$this->baseFpdf->k,
-                ($h-$y1)*$this->baseFpdf->k,
-                $x2*$this->baseFpdf->k,
-                ($h-$y2)*$this->baseFpdf->k,
-                $x3*$this->baseFpdf->k,
-                ($h-$y3)*$this->baseFpdf->k
+                $x1 * $this->baseFpdf->k,
+                ($h - $y1) * $this->baseFpdf->k,
+                $x2 * $this->baseFpdf->k,
+                ($h - $y2) * $this->baseFpdf->k,
+                $x3 * $this->baseFpdf->k,
+                ($h - $y3) * $this->baseFpdf->k
             )
         );
     }
