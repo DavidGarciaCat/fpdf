@@ -131,7 +131,7 @@ class FPDFFacade implements FPDFInterface
 
     public function output($dest = '', $name = '', $isUTF8 = false)
     {
-        $this->baseFpdf->output($dest, $name, $isUTF8);
+        return $this->baseFpdf->output($dest, $name, $isUTF8);
     }
 
     public function pageNo()
