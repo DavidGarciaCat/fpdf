@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## v1.1.1 [2017-12-11]
 
-### Changed
+### Fixed
 
 - Return the parent output for `output()` method
 - Return the parent output for `pageNo()` method
