@@ -15,7 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- Updated README file to include an example about how to use Decorators to enhance the FPDF base functionalities
+- Updated README file to include an example about:
+  - How to download `composer`
+  - How to use Decorators to enhance the FPDF base functionalities
 
 ## v1.0.0 [2017-12-08]
 
