@@ -68,13 +68,12 @@ Step 2. Include the `use` statements for `FPDF`:
 
 ```php
 use DavidGarciaCat\FPDF\FPDF;
-use DavidGarciaCat\FPDF\Script\FPDFFacade;
 ```
 
 Step 3. Create a PDF file:
 
 ```php
-$fpdf = new FPDFFacade(new FPDF());
+$fpdf = new new FPDF();
 $fpdf->output();
 ```
 
@@ -88,10 +87,8 @@ Just set-up the main library as a Facade and then inject it in any Decorator con
 ```php
 use DavidGarciaCat\FPDF\FPDF;
 use DavidGarciaCat\FPDF\Script\BookmarkDecorator;
-use DavidGarciaCat\FPDF\Script\FPDFFacade;
 
-$fpdf = new FPDFFacade(new FPDF());
-$fpdf = new BookmarkDecorator($fpdf);
+$fpdf = new BookmarkDecorator(new FPDF());
 ```
 
 ## What is FPDF?
