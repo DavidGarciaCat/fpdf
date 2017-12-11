@@ -30,10 +30,10 @@ class DiagramDecorator implements FPDFInterface
 
     // ----
 
-    var $legends;
-    var $wLegend;
-    var $sum;
-    var $NbVal;
+    private $legends;
+    private $wLegend;
+    private $sum;
+    private $NbVal;
 
     function pieChart($w, $h, $data, $format, $colors=null)
     {
