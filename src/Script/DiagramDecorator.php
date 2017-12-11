@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * FPDF
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
+
 namespace DavidGarciaCat\FPDF\Script;
 
 use DavidGarciaCat\FPDF\Exception\FPDFException;
@@ -35,10 +42,10 @@ class DiagramDecorator implements FPDFInterface
     private $sum;
     private $NbVal;
 
-    function pieChart($w, $h, $data, $format, $colors=null)
+    public function pieChart($w, $h, $data, $format, $colors = null)
     {
         $this->setFont('Courier', '', 10);
-        $this->setLegends($data,$format);
+        $this->setLegends($data, $format);
 
         $XPage = $this->baseFpdf->getX();
         $YPage = $this->baseFpdf->getY();
@@ -50,10 +57,10 @@ class DiagramDecorator implements FPDFInterface
         $XDiag = $XPage + $margin + $radius;
         $YDiag = $YPage + $margin + $radius;
 
-        if($colors == null) {
-            for($i = 0; $i < $this->NbVal; $i++) {
+        if ($colors == null) {
+            for ($i = 0; $i < $this->NbVal; $i++) {
                 $gray = $i * intval(255 / $this->NbVal);
-                $colors[$i] = array($gray,$gray,$gray);
+                $colors[$i] = [$gray, $gray, $gray];
             }
         }
 
@@ -63,12 +70,12 @@ class DiagramDecorator implements FPDFInterface
         $angleEnd = 0;
         $i = 0;
 
-        foreach($data as $val) {
-            $angle = ($val * 360) / doubleval($this->sum);
+        foreach ($data as $val) {
+            $angle = ($val * 360) / floatval($this->sum);
 
             if ($angle != 0) {
                 $angleEnd = $angleStart + $angle;
-                $this->setFillColor($colors[$i][0],$colors[$i][1],$colors[$i][2]);
+                $this->setFillColor($colors[$i][0], $colors[$i][1], $colors[$i][2]);
                 $this->baseFpdf->sector($XDiag, $YDiag, $radius, $angleStart, $angleEnd);
                 $angleStart += $angle;
             }
@@ -81,21 +88,21 @@ class DiagramDecorator implements FPDFInterface
 
         $x1 = $XPage + 2 * $radius + 4 * $margin;
         $x2 = $x1 + $hLegend + $margin;
-        $y1 = $YDiag - $radius + (2 * $radius - $this->NbVal*($hLegend + $margin)) / 2;
+        $y1 = $YDiag - $radius + (2 * $radius - $this->NbVal * ($hLegend + $margin)) / 2;
 
-        for($i=0; $i<$this->NbVal; $i++) {
-            $this->setFillColor($colors[$i][0],$colors[$i][1],$colors[$i][2]);
+        for ($i = 0; $i < $this->NbVal; $i++) {
+            $this->setFillColor($colors[$i][0], $colors[$i][1], $colors[$i][2]);
             $this->rect($x1, $y1, $hLegend, $hLegend, 'DF');
-            $this->setXY($x2,$y1);
-            $this->cell(0,$hLegend,$this->legends[$i]);
-            $y1+=$hLegend + $margin;
+            $this->setXY($x2, $y1);
+            $this->cell(0, $hLegend, $this->legends[$i]);
+            $y1 += $hLegend + $margin;
         }
     }
 
-    function barDiagram($w, $h, $data, $format, $color=null, $maxVal=0, $nbDiv=4)
+    public function barDiagram($w, $h, $data, $format, $color = null, $maxVal = 0, $nbDiv = 4)
     {
         $this->setFont('Courier', '', 10);
-        $this->setLegends($data,$format);
+        $this->setLegends($data, $format);
 
         $XPage = $this->getX();
         $YPage = $this->getY();
@@ -106,8 +113,9 @@ class DiagramDecorator implements FPDFInterface
         $XDiag = $XPage + $margin * 2 + $this->wLegend;
         $lDiag = floor($w - $margin * 3 - $this->wLegend);
 
-        if($color == null)
-            $color=array(155,155,155);
+        if ($color == null) {
+            $color = [155, 155, 155];
+        }
 
         if ($maxVal == 0) {
             $maxVal = max($data);
@@ -126,20 +134,20 @@ class DiagramDecorator implements FPDFInterface
         $this->rect($XDiag, $YDiag, $lDiag, $hDiag);
 
         $this->setFont('Courier', '', 10);
-        $this->setFillColor($color[0],$color[1],$color[2]);
+        $this->setFillColor($color[0], $color[1], $color[2]);
 
-        $i=0;
+        $i = 0;
 
-        foreach($data as $val) {
+        foreach ($data as $val) {
             //Bar
             $xval = $XDiag;
-            $lval = (int)($val * $unit);
+            $lval = (int) ($val * $unit);
             $yval = $YDiag + ($i + 1) * $hBar - $eBaton / 2;
             $hval = $eBaton;
             $this->rect($xval, $yval, $lval, $hval, 'DF');
             //Legend
             $this->setXY(0, $yval);
-            $this->cell($xval - $margin, $hval, $this->legends[$i],0,0,'R');
+            $this->cell($xval - $margin, $hval, $this->legends[$i], 0, 0, 'R');
             $i++;
         }
 
@@ -154,19 +162,18 @@ class DiagramDecorator implements FPDFInterface
         }
     }
 
-    function setLegends($data, $format)
+    public function setLegends($data, $format)
     {
-        $this->legends=array();
-        $this->wLegend=0;
-        $this->sum=array_sum($data);
-        $this->NbVal=count($data);
+        $this->legends = [];
+        $this->wLegend = 0;
+        $this->sum = array_sum($data);
+        $this->NbVal = count($data);
 
-        foreach($data as $l=>$val)
-        {
-            $p=sprintf('%.2f',$val/$this->sum*100).'%';
-            $legend=str_replace(array('%l','%v','%p'),array($l,$val,$p),$format);
-            $this->legends[]=$legend;
-            $this->wLegend=max($this->getStringWidth($legend),$this->wLegend);
+        foreach ($data as $l=>$val) {
+            $p = sprintf('%.2f', $val / $this->sum * 100).'%';
+            $legend = str_replace(['%l', '%v', '%p'], [$l, $val, $p], $format);
+            $this->legends[] = $legend;
+            $this->wLegend = max($this->getStringWidth($legend), $this->wLegend);
         }
     }
 
