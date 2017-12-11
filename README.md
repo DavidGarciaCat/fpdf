@@ -4,7 +4,33 @@
 
 ### Before we start
 
-Please make sure you have your `composer` available as a global system binary. If not then use `php composer.phar` instead of `composer`. 
+You will need to download and install `composer`:
+
+(NOTE: this project is not related with `composer` team so they can change the way to download and use it. Please refer to [getcomposer.org](https://getcomposer.org/download/) to get latest updates about how to get `composer`)
+
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+```
+
+Now that you have the `composer.phar` file, you can move it to your project folder, in order to use it as part of it:
+
+```bash
+mv composer.phar /path/to/your/project/root/composer.phar
+
+php composer.phar -V
+```
+
+(NOTE: your `composer.phar` file should be added into your `.gitignore` file, due it's not a file related with your project)
+
+Or you can move it as a global system binary (the how-to-install process is based on this method):
+
+```bash
+mv composer.phar /usr/bin/composer
+
+composer -V
+```
 
 ### Install
 
