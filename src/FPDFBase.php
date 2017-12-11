@@ -279,7 +279,7 @@ class FPDFBase implements FPDFInterface
     public function error($msg)
     {
         // Fatal error
-        throw new FPDFException('FPDFBase error: '.$msg);
+        throw new FPDFException('FPDF error: '.$msg);
     }
 
     public function close()
