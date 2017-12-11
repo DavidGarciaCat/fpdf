@@ -31,7 +31,7 @@ class FPDFFacade implements FPDFInterface
 
     public function acceptPageBreak()
     {
-        $this->baseFpdf->acceptPageBreak();
+        return $this->baseFpdf->acceptPageBreak();
     }
 
     public function addFont($family, $style = '', $file = '')
@@ -41,7 +41,7 @@ class FPDFFacade implements FPDFInterface
 
     public function addLink()
     {
-        $this->baseFpdf->addLink();
+        return $this->baseFpdf->addLink();
     }
 
     public function addPage($orientation = '', $size = '', $rotation = 0)
