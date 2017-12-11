@@ -916,7 +916,7 @@ class FPDFBase implements FPDFInterface
             if ($type == 'jpeg') {
                 $type = 'jpg';
             }
-            $mtd = '_parse'.$type;
+            $mtd = 'parse'.$type;
             if (!method_exists($this, $mtd)) {
                 $this->error('Unsupported image type: '.$type);
             }
@@ -1740,7 +1740,7 @@ class FPDFBase implements FPDFInterface
                 $this->put('endobj');
             } else {
                 // Allow for additional types
-                $mtd = '_put'.strtolower($type);
+                $mtd = 'put'.strtolower($type);
                 if (!method_exists($this, $mtd)) {
                     $this->error('Unsupported font type: '.$type);
                 }
