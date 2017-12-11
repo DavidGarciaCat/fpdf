@@ -9,16 +9,15 @@
 
 namespace DavidGarciaCat\FPDF\Script;
 
-use DavidGarciaCat\FPDF\FPDF;
 use DavidGarciaCat\FPDF\FPDFInterface;
 
 /**
  * This extension adds bookmark support.
  */
-class BookmarkDecorator extends FPDF implements FPDFInterface
+class BookmarkDecorator implements FPDFInterface
 {
     /**
-     * @var FPDF
+     * @var FPDFInterface
      */
     private $baseFpdf;
 
@@ -35,9 +34,9 @@ class BookmarkDecorator extends FPDF implements FPDFInterface
     /**
      * BookmarkDecorator constructor.
      *
-     * @param FPDF $fpdf
+     * @param FPDFInterface $fpdf
      */
-    public function __construct(FPDF $fpdf)
+    public function __construct(FPDFInterface $fpdf)
     {
         $this->baseFpdf = $fpdf;
     }
