@@ -14,66 +14,66 @@ use DavidGarciaCat\FPDF\Exception\FPDFException;
 /**
  * @author FPDF Team
  */
-class FPDF
+class FPDF implements FPDFInterface
 {
-    protected $page; // current page number
-    protected $n; // current object number
-    protected $offsets; // array of object offsets
-    protected $buffer; // buffer holding in-memory PDF
-    protected $pages; // array containing pages
-    protected $state; // current document state
-    protected $compress; // compression flag
-    protected $k; // scale factor (number of points in user unit)
-    protected $DefOrientation; // default orientation
-    protected $CurOrientation; // current orientation
-    protected $StdPageSizes; // standard page sizes
-    protected $DefPageSize; // default page size
-    protected $CurPageSize; // current page size
-    protected $CurRotation; // current page rotation
-    protected $PageInfo; // page-related data
-    protected $wPt;
-    protected $hPt; // dimensions of current page in points
-    protected $w;
-    protected $h; // dimensions of current page in user unit
-    protected $lMargin; // left margin
-    protected $tMargin; // top margin
-    protected $rMargin; // right margin
-    protected $bMargin; // page break margin
-    protected $cMargin; // cell margin
-    protected $x;
-    protected $y; // current position in user unit
-    protected $lasth; // height of last printed cell
-    protected $LineWidth; // line width in user unit
-    protected $fontpath; // path containing fonts
-    protected $CoreFonts; // array of core font names
-    protected $fonts; // array of used fonts
-    protected $FontFiles; // array of font files
-    protected $encodings; // array of encodings
-    protected $cmaps; // array of ToUnicode CMaps
-    protected $FontFamily; // current font family
-    protected $FontStyle; // current font style
-    protected $underline; // underlining flag
-    protected $CurrentFont; // current font info
-    protected $FontSizePt; // current font size in points
-    protected $FontSize; // current font size in user unit
-    protected $DrawColor; // commands for drawing color
-    protected $FillColor; // commands for filling color
-    protected $TextColor; // commands for text color
-    protected $ColorFlag; // indicates whether fill and text colors are different
-    protected $WithAlpha; // indicates whether alpha channel is used
-    protected $ws; // word spacing
-    protected $images; // array of used images
-    protected $PageLinks; // array of links in pages
-    protected $links; // array of internal links
-    protected $AutoPageBreak; // automatic page breaking
-    protected $PageBreakTrigger; // threshold used to trigger page breaks
-    protected $InHeader; // flag set when processing header
-    protected $InFooter; // flag set when processing footer
-    protected $AliasNbPages; // alias for total number of pages
-    protected $ZoomMode; // zoom display mode
-    protected $LayoutMode; // layout display mode
-    protected $metadata; // document properties
-    protected $PDFVersion; // PDF version number
+    public $page; // current page number
+    public $n; // current object number
+    public $offsets; // array of object offsets
+    public $buffer; // buffer holding in-memory PDF
+    public $pages; // array containing pages
+    public $state; // current document state
+    public $compress; // compression flag
+    public $k; // scale factor (number of points in user unit)
+    public $DefOrientation; // default orientation
+    public $CurOrientation; // current orientation
+    public $StdPageSizes; // standard page sizes
+    public $DefPageSize; // default page size
+    public $CurPageSize; // current page size
+    public $CurRotation; // current page rotation
+    public $PageInfo; // page-related data
+    public $wPt;
+    public $hPt; // dimensions of current page in points
+    public $w;
+    public $h; // dimensions of current page in user unit
+    public $lMargin; // left margin
+    public $tMargin; // top margin
+    public $rMargin; // right margin
+    public $bMargin; // page break margin
+    public $cMargin; // cell margin
+    public $x;
+    public $y; // current position in user unit
+    public $lasth; // height of last printed cell
+    public $LineWidth; // line width in user unit
+    public $fontpath; // path containing fonts
+    public $CoreFonts; // array of core font names
+    public $fonts; // array of used fonts
+    public $FontFiles; // array of font files
+    public $encodings; // array of encodings
+    public $cmaps; // array of ToUnicode CMaps
+    public $FontFamily; // current font family
+    public $FontStyle; // current font style
+    public $underline; // underlining flag
+    public $CurrentFont; // current font info
+    public $FontSizePt; // current font size in points
+    public $FontSize; // current font size in user unit
+    public $DrawColor; // commands for drawing color
+    public $FillColor; // commands for filling color
+    public $TextColor; // commands for text color
+    public $ColorFlag; // indicates whether fill and text colors are different
+    public $WithAlpha; // indicates whether alpha channel is used
+    public $ws; // word spacing
+    public $images; // array of used images
+    public $PageLinks; // array of links in pages
+    public $links; // array of internal links
+    public $AutoPageBreak; // automatic page breaking
+    public $PageBreakTrigger; // threshold used to trigger page breaks
+    public $InHeader; // flag set when processing header
+    public $InFooter; // flag set when processing footer
+    public $AliasNbPages; // alias for total number of pages
+    public $ZoomMode; // zoom display mode
+    public $LayoutMode; // layout display mode
+    public $metadata; // document properties
+    public $PDFVersion; // PDF version number
 
     /*******************************************************************************
      *                               Public methods                                 *
@@ -1079,7 +1079,7 @@ class FPDF
      *                              Protected methods                               *
      *******************************************************************************/
 
-    protected function doChecks()
+    public function doChecks()
     {
         // Check mbstring overloading
         if (ini_get('mbstring.func_overload') & 2) {
@@ -1087,7 +1087,7 @@ class FPDF
         }
     }
 
-    protected function checkOutput()
+    public function checkOutput()
     {
         if (PHP_SAPI != 'cli') {
             if (headers_sent($file, $line)) {
@@ -1105,7 +1105,7 @@ class FPDF
         }
     }
 
-    protected function getPageSize($size)
+    public function getPageSize($size)
     {
         if (is_string($size)) {
             $size = strtolower($size);
@@ -1124,7 +1124,7 @@ class FPDF
         }
     }
 
-    protected function beginPage($orientation, $size, $rotation)
+    public function beginPage($orientation, $size, $rotation)
     {
         $this->page++;
         $this->pages[$this->page] = '';
@@ -1170,12 +1170,12 @@ class FPDF
         }
     }
 
-    protected function endPage()
+    public function endPage()
     {
         $this->state = 1;
     }
 
-    protected function loadFont($font)
+    public function loadFont($font)
     {
         // Load a font definition file from the font directory
         if (strpos($font, '/') !== false || strpos($font, '\\') !== false) {
@@ -1195,7 +1195,7 @@ class FPDF
         return get_defined_vars();
     }
 
-    protected function isAscii($s)
+    public function isAscii($s)
     {
         // Test if string is ASCII
         $nb = strlen($s);
@@ -1208,7 +1208,7 @@ class FPDF
         return true;
     }
 
-    protected function httpEncode($param, $value, $isUTF8)
+    public function httpEncode($param, $value, $isUTF8)
     {
         // Encode HTTP header field parameter
         if ($this->isAscii($value)) {
@@ -1224,7 +1224,7 @@ class FPDF
         }
     }
 
-    protected function utf8ToUtf16($s)
+    public function utf8ToUtf16($s)
     {
         // Convert UTF-8 to UTF-16BE with BOM
         $res = "\xFE\xFF";
@@ -1252,7 +1252,7 @@ class FPDF
         return $res;
     }
 
-    protected function escape($s)
+    public function escape($s)
     {
         // Escape special characters
         if (strpos($s, '(') !== false || strpos($s, ')') !== false || strpos($s, '\\') !== false || strpos($s, "\r") !== false) {
@@ -1262,7 +1262,7 @@ class FPDF
         }
     }
 
-    protected function textString($s)
+    public function textString($s)
     {
         // Format a text string
         if (!$this->isAscii($s)) {
@@ -1272,7 +1272,7 @@ class FPDF
         return '('.$this->escape($s).')';
     }
 
-    protected function doUnderline($x, $y, $txt)
+    public function doUnderline($x, $y, $txt)
     {
         // Underline text
         $up = $this->CurrentFont['up'];
@@ -1282,7 +1282,7 @@ class FPDF
         return sprintf('%.2F %.2F %.2F %.2F re f', $x * $this->k, ($this->h - ($y - $up / 1000 * $this->FontSize)) * $this->k, $w * $this->k, -$ut / 1000 * $this->FontSizePt);
     }
 
-    protected function parseJpg($file)
+    public function parseJpg($file)
     {
         // Extract info from a JPEG file
         $a = getimagesize($file);
@@ -1305,7 +1305,7 @@ class FPDF
         return ['w'=>$a[0], 'h'=>$a[1], 'cs'=>$colspace, 'bpc'=>$bpc, 'f'=>'DCTDecode', 'data'=>$data];
     }
 
-    protected function parsePng($file)
+    public function parsePng($file)
     {
         // Extract info from a PNG file
         $f = fopen($file, 'rb');
@@ -1318,7 +1318,7 @@ class FPDF
         return $info;
     }
 
-    protected function parsePngStream($f, $file)
+    public function parsePngStream($f, $file)
     {
         // Check signature
         if ($this->readStream($f, 8) != chr(137).'PNG'.chr(13).chr(10).chr(26).chr(10)) {
@@ -1442,7 +1442,7 @@ class FPDF
         return $info;
     }
 
-    protected function readStream($f, $n)
+    public function readStream($f, $n)
     {
         // Read n bytes from stream
         $res = '';
@@ -1461,7 +1461,7 @@ class FPDF
         return $res;
     }
 
-    protected function readInt($f)
+    public function readInt($f)
     {
         // Read a 4-byte integer from stream
         $a = unpack('Ni', $this->readStream($f, 4));
@@ -1469,7 +1469,7 @@ class FPDF
         return $a['i'];
     }
 
-    protected function parseGif($file)
+    public function parseGif($file)
     {
         // Extract info from a GIF file (via PNG conversion)
         if (!function_exists('imagepng')) {
@@ -1499,7 +1499,7 @@ class FPDF
         return $info;
     }
 
-    protected function out($s)
+    public function out($s)
     {
         // Add a line to the document
         if ($this->state == 2) {
@@ -1513,17 +1513,17 @@ class FPDF
         }
     }
 
-    protected function put($s)
+    public function put($s)
     {
         $this->buffer .= $s."\n";
     }
 
-    protected function getOffset()
+    public function getOffset()
     {
         return strlen($this->buffer);
     }
 
-    protected function newObject($n = null)
+    public function newObject($n = null)
     {
         // Begin a new object
         if ($n === null) {
@@ -1533,14 +1533,14 @@ class FPDF
         $this->put($n.' 0 obj');
     }
 
-    protected function putStream($data)
+    public function putStream($data)
     {
         $this->put('stream');
         $this->put($data);
         $this->put('endstream');
     }
 
-    protected function putStreamObject($data)
+    public function putStreamObject($data)
     {
         if ($this->compress) {
             $entries = '/Filter /FlateDecode ';
@@ -1555,7 +1555,7 @@ class FPDF
         $this->put('endobj');
     }
 
-    protected function putPage($n)
+    public function putPage($n)
     {
         $this->newObject();
         $this->put('<</Type /Page');
@@ -1599,7 +1599,7 @@ class FPDF
         $this->putStreamObject($this->pages[$n]);
     }
 
-    protected function putPages()
+    public function putPages()
     {
         $nb = $this->page;
         for ($n = 1; $n <= $nb; $n++) {
@@ -1629,7 +1629,7 @@ class FPDF
         $this->put('endobj');
     }
 
-    protected function putFonts()
+    public function putFonts()
     {
         foreach ($this->FontFiles as $file=>$info) {
             // Font file embedding
@@ -1749,7 +1749,7 @@ class FPDF
         }
     }
 
-    protected function toUnicodeCmap($uv)
+    public function toUnicodeCmap($uv)
     {
         $ranges = '';
         $nbr = 0;
@@ -1795,7 +1795,7 @@ class FPDF
         return $s;
     }
 
-    protected function putImages()
+    public function putImages()
     {
         foreach (array_keys($this->images) as $file) {
             $this->putImage($this->images[$file]);
@@ -1804,7 +1804,7 @@ class FPDF
         }
     }
 
-    protected function putImage(&$info)
+    public function putImage(&$info)
     {
         $this->newObject();
         $info['n'] = $this->n;
@@ -1853,14 +1853,14 @@ class FPDF
         }
     }
 
-    protected function putXObjectDict()
+    public function putXObjectDict()
     {
         foreach ($this->images as $image) {
             $this->put('/I'.$image['i'].' '.$image['n'].' 0 R');
         }
     }
 
-    protected function putResourceDict()
+    public function putResourceDict()
     {
         $this->put('/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
         $this->put('/Font <<');
@@ -1873,7 +1873,7 @@ class FPDF
         $this->put('>>');
     }
 
-    protected function putResources()
+    public function putResources()
     {
         $this->putFonts();
         $this->putImages();
@@ -1885,7 +1885,7 @@ class FPDF
         $this->put('endobj');
     }
 
-    protected function putInfo()
+    public function putInfo()
     {
         $this->metadata['Producer'] = 'david-garcia/fpdf';
         $this->metadata['CreationDate'] = 'D:'.date('YmdHis');
@@ -1894,7 +1894,7 @@ class FPDF
         }
     }
 
-    protected function putCatalog()
+    public function putCatalog()
     {
         $n = $this->PageInfo[1]['n'];
         $this->put('/Type /Catalog');
@@ -1917,19 +1917,19 @@ class FPDF
         }
     }
 
-    protected function putHeader()
+    public function putHeader()
     {
         $this->put('%PDF-'.$this->PDFVersion);
     }
 
-    protected function putTrailer()
+    public function putTrailer()
     {
         $this->put('/Size '.($this->n + 1));
         $this->put('/Root '.$this->n.' 0 R');
         $this->put('/Info '.($this->n - 1).' 0 R');
     }
 
-    protected function endDoc()
+    public function endDoc()
     {
         $this->putHeader();
         $this->putPages();

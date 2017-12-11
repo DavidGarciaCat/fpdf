@@ -4,7 +4,33 @@
 
 ### Before we start
 
-Please make sure you have your `composer` available as a global system binary. If not then use `php composer.phar` instead of `composer`. 
+You will need to download and install `composer`:
+
+(NOTE: this project is not related with `composer` team so they can change the way to download and use it. Please refer to [getcomposer.org](https://getcomposer.org/download/) to get latest updates about how to get `composer`)
+
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+```
+
+Now that you have the `composer.phar` file, you can move it to your project folder, in order to use it as part of it:
+
+```bash
+mv composer.phar /path/to/your/project/root/composer.phar
+
+php composer.phar -V
+```
+
+(NOTE: your `composer.phar` file should be added into your `.gitignore` file, due it's not a file related with your project)
+
+Or you can move it as a global system binary (the how-to-install process is based on this method):
+
+```bash
+mv composer.phar /usr/bin/composer
+
+composer -V
+```
 
 ### Install
 
@@ -13,7 +39,7 @@ Just include your package in your `composer.json` file:
 ```json
 {
     "require": {
-        "david-garcia/fpdf": "^1.0"
+        "david-garcia/fpdf": "^1.1"
     }
 }
 ```
@@ -38,20 +64,35 @@ Step 1. Include the composer autoload:
 require "vendor/autoload.php";
 ```
 
-Step 2. Include the `use` statement for `FPDF`:
+Step 2. Include the `use` statements for `FPDF`:
 
 ```php
 use DavidGarciaCat\FPDF\FPDF;
+use DavidGarciaCat\FPDF\Script\FPDFFacade;
 ```
 
 Step 3. Create a PDF file:
 
 ```php
-$pdf = new FPDF();
-$pdf->output();
+$fpdf = new FPDFFacade(new FPDF());
+$fpdf->output();
 ```
 
-Please check [FPDF website](http://www.fpdf.org) for tutorials and examples.
+### Scripts
+
+FPDF allows to build and implement stripts to expand and enhance the experience working with the library.
+
+This project is implementing the currently published Scripts in FPDF website as Design Pattern Decorators.
+Just set-up the main library as a Facade and then inject it in any Decorator constructor: 
+
+```php
+use DavidGarciaCat\FPDF\FPDF;
+use DavidGarciaCat\FPDF\Script\BookmarkDecorator;
+use DavidGarciaCat\FPDF\Script\FPDFFacade;
+
+$fpdf = new FPDFFacade(new FPDF());
+$fpdf = new BookmarkDecorator($fpdf);
+```
 
 ## What is FPDF?
 
@@ -74,3 +115,12 @@ FPDF requires no extension (except Zlib to enable compression and GD for GIF sup
 Please browse [www.fpdf.org](http://www.fpdf.org/) for Tutorials and Documentation. The tutorials will give you a quick start. The complete online documentation is available OnLine and you can downlaod it in multiple languages. It is strongly advised to read the FAQ which lists the most common questions and issues.
 
 A Script section is available and provides some useful extensions (such as bookmarks, rotations, tables, barcodes...).
+
+## ToDo
+
+- **Provide all FPDF Scripts natively**  
+FPDF has several scripts, but we need to download and include all of them manually, in order to use them. This project already moved the FPDF code to `namespaces` and is starting to include other FPDF Scripts, however the real goal is to include all these functionalities natively, as part of the project.
+- **Scrutinizer CI Code coverage**  
+Base FPDF source code, downloadable at [www.fpdf.org](http://www.fpdf.org/)'s website, does not include automated tests, so there's no code coverage. This project wants to provide tests, in order to enhance the code quality and offer the expected warranties that all of us want for a project like this.
+- **Scrutinizer CI Code score**  
+Base FPDF and FPDF Scripts are probably not designed in the right way, and code score is really poor due a high complexity and some missed checks. This project wants to improvide the code quality.
