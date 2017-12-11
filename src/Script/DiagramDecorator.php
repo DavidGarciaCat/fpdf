@@ -57,7 +57,7 @@ class DiagramDecorator implements FPDFInterface
         $XDiag = $XPage + $margin + $radius;
         $YDiag = $YPage + $margin + $radius;
 
-        if ($colors == null) {
+        if (is_null($colors)) {
             for ($i = 0; $i < $this->NbVal; $i++) {
                 $gray = $i * intval(255 / $this->NbVal);
                 $colors[$i] = [$gray, $gray, $gray];
@@ -113,7 +113,7 @@ class DiagramDecorator implements FPDFInterface
         $XDiag = $XPage + $margin * 2 + $this->wLegend;
         $lDiag = floor($w - $margin * 3 - $this->wLegend);
 
-        if ($color == null) {
+        if (is_null($color)) {
             $color = [155, 155, 155];
         }
 
